@@ -29,6 +29,11 @@ The library is best viewed and used with [Syside Editor](https://docs.sensmetry.
 
 If you are using the library in your work, please cite:
 
+Bussemaker, J.H. et al., 2026, April.
+System Architecture Optimization Using SysML v2: Language Extension and Implementation.
+IEEE SysCon 2026, Halifax, Canada.
+doi: [10.1109/SysCon66367.2026.11503593](https://dx.doi.org/10.1109/SysCon66367.2026.11503593)
+
 Bussemaker, J.H., Torrigiani, F., & Cabaleiro, C. (2026). HERA Architecture Framework Libraries. ODE4HERA Consortium.
 doi: [10.5281/zenodo.18267042](https://doi.org/10.5281/zenodo.18267042)
 
