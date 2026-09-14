@@ -99,7 +99,7 @@ package ArchitectureDesign_ConnectionChoiceExample {
 
     // Architecture design space model
 
-    #architectureDesignSpace part def ControlSystem {
+    abstract #architectureDesignSpace part def ControlSystem {
         doc /* Control system architecture design space */
 
         // Define the top-level functions

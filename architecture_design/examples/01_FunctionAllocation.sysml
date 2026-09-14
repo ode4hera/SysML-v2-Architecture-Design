@@ -104,7 +104,7 @@ package ArchitectureDesign_FunctionAllocationExample {
     }
 
     package ArchitectureDesignSpace {
-        #architectureDesignSpace part def DesignSpace {
+        abstract #architectureDesignSpace part def DesignSpace {
             doc /* Propulsion system design space,
             which generate thrust by either an electric motor or a turboprop.
             If an electric motor is chosen, it can take electric power from a battery pack or a fuel cell.
@@ -192,10 +192,10 @@ package ArchitectureDesign_FunctionAllocationExample {
             }
 
             // Deselect electric components
-            part :>> electricMotor[0];
-            action :>> provideElectricPower[0];
-            part :>> batteryPack[0];
-            part :>> fuelCell[0];
+            part :>> electricMotor[0] = null;
+            action :>> provideElectricPower[0] = null;
+            part :>> batteryPack[0] = null;
+            part :>> fuelCell[0] = null;
 
             // Choice and associated design variable values
             :>> architecturalChoices {
@@ -224,12 +224,12 @@ package ArchitectureDesign_FunctionAllocationExample {
             }
 
             // Deselect fuel cell
-            part :>> fuelCell[0];
+            part :>> fuelCell[0] = null;
 
             // Deselect the turboprop and its induced elements
-            part :>> turboprop[0];
-            action :>> provideFuel[0];
-            part :>> fuelSystem[0];
+            part :>> turboprop[0] = null;
+            action :>> provideFuel[0] = null;
+            part :>> fuelSystem[0] = null;
 
             // Choice and associated design variable values
             :>> architecturalChoices {

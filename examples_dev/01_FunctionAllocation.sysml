@@ -282,7 +282,7 @@ package SA_FunctionAllocationExample {
         
         // Select the fuel system and control system; remove the battery pack
         part redefines fuelSystem[1];
-        part redefines batteryPack[0];
+        part redefines batteryPack[0] = null;
         part redefines controlSystem;
 
         perform action redefines generateThrust[1];
@@ -290,7 +290,7 @@ package SA_FunctionAllocationExample {
         action redefines controlBladePitch[1];
         action redefines provideFuel[1];
         action redefines controlFuelFlow[1];
-        action redefines provideElectricEnergy[0];
+        action redefines provideElectricEnergy[0] = null;
 
     }
 
@@ -309,15 +309,15 @@ package SA_FunctionAllocationExample {
         
         // Select the fuel system and control system; remove the battery pack
         part redefines fuelSystem[1];
-        part redefines batteryPack[0];
+        part redefines batteryPack[0] = null;
         part redefines controlSystem[1];
 
         perform action redefines generateThrust[1];
-        action redefines generateMechPower[0];
-        action redefines controlBladePitch[0];
+        action redefines generateMechPower[0] = null;
+        action redefines controlBladePitch[0] = null;
         action redefines provideFuel[1];
         action redefines controlFuelFlow[1];
-        action redefines provideElectricEnergy[0];
+        action redefines provideElectricEnergy[0] = null;
     }
 
     #architecture part def electricPropulsionSystem :> PropulsionSystem {
@@ -335,15 +335,15 @@ package SA_FunctionAllocationExample {
         // part electricMotor = mechanicalPowerProvider;
         
         // Remove the fuel system; select the battery pack and control system
-        part redefines fuelSystem[0];
+        part redefines fuelSystem[0] = null;
         part redefines batteryPack[1];
         part redefines controlSystem[1];
 
         perform action redefines generateThrust[1];
         action redefines generateMechPower[1];
         action redefines controlBladePitch[1];
-        action redefines provideFuel[0];
-        action redefines controlFuelFlow[0];
+        action redefines provideFuel[0] = null;
+        action redefines controlFuelFlow[0] = null;
         action redefines provideElectricEnergy[1];
     }
 

@@ -69,7 +69,7 @@ package ADSG_InstantiationChoices {
 
             part :>> part1[1];
 
-            part :>> part2[0];
+            part :>> part2[0] = null;
             
             part :>> part3[2] ordered = (part3_1, part3_2);
             part part3_1[1] :> part3;

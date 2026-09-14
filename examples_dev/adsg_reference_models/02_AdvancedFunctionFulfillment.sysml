@@ -39,7 +39,7 @@ package ADSG_AdvandedFunctionFullfillment {
         }
         #architecture part def NonFulfillArch :> NFDesignSpace {
             action :>> boundaryFunction[1];
-            part :>> part1[0];
+            part :>> part1[0] = null;
             #nonFulfillment occurrence :>> nonFulfillmentOfBoundary[1] {
                 :>> nonFulfilledActions = boundaryFunction;
             }
@@ -145,7 +145,7 @@ package ADSG_AdvandedFunctionFullfillment {
         #architecture part def DecompArch :> DecompDesignSpace {
             action :>> boundaryFunction[1];
             #decomposition connection :>> functionDecomposition[1];
-            part :>> part0[0];
+            part :>> part0[0] = null;
             action :>> function1[1];
             action :>> function2[1];
             part :>> part1[1] {
@@ -197,7 +197,7 @@ package ADSG_AdvandedFunctionFullfillment {
         #architecture part def ConceptArch :> ConceptDesignSpace {
             action :>> boundaryFunction[1];
             #concept allocation :>> conceptName[1];
-            part :>> part1[0];
+            part :>> part1[0] = null;
 
             action :>> specificFunction[1];
             part :>> part2[1] {

@@ -56,7 +56,7 @@ package ADSG_ArchitecturalConstraints {
             part :>> part1[1] {
                 perform action :>> boundaryFunction1Performance[1] ::> boundaryFunction1;
             }
-            part :>> part2[0];
+            part :>> part2[0] = null;
             part :>> part3[1] {
                 perform action :>> boundaryFunction2Performance[1] ::> boundaryFunction2;
             }
@@ -73,7 +73,7 @@ package ADSG_ArchitecturalConstraints {
             action :>> boundaryFunction1[1];
             action :>> boundaryFunction2[1];
 
-            part :>> part1[0];
+            part :>> part1[0] = null;
             part :>> part2[1] {
                 perform action :>> boundaryFunction1Performance[1] ::> boundaryFunction1;
                 perform action :>> boundaryFunction2Performance[1] ::> boundaryFunction2;
@@ -142,7 +142,7 @@ package ADSG_ArchitecturalConstraints {
         }
         #architecture part def Arch :> DesignSpace {
             :>> part1a[1];
-            :>> part1b[0];
+            :>> part1b[0] = null;
             :>> part2a[1];
             :>> part2b[1];
 

@@ -276,7 +276,7 @@ package SA_ArchitectureChoicesExample {
         
         // Select the fuel system and control system; remove the battery pack
         part redefines fuelSystem;
-        part redefines batteryPack[0];
+        part redefines batteryPack[0] = null;
         part redefines controlSystem;
     }
 
@@ -298,7 +298,7 @@ package SA_ArchitectureChoicesExample {
         
         // Select the fuel system and control system; remove the battery pack
         part redefines fuelSystem;
-        part redefines batteryPack[0];
+        part redefines batteryPack[0] = null;
         part redefines controlSystem;
     }
 
@@ -335,7 +335,7 @@ package SA_ArchitectureChoicesExample {
         }
         
         // Remove the fuel system; select the battery pack (2x) and control system
-        part redefines fuelSystem[0];
+        part redefines fuelSystem[0] = null;
         part redefines controlSystem;
 
         part redefines batteryPack[2] = (batteryPack1, batteryPack2);

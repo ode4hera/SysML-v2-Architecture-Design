@@ -75,7 +75,7 @@ package ADSG_FunctionComponentsMapping {
             perform action redefines inducedActionPerformance[1] ::> inducedAction;
             perform action redefines secondActionPerformance[0] ::> secondAction;
         }
-        part :>> part3[0];
+        part :>> part3[0] = null;
         part :>> part4[1] {
             perform action :>> secondActionPerformance[1] ::> secondAction;
         }

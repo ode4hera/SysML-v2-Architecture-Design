@@ -12,7 +12,7 @@ package ArchitectureDesign_AdvancedFunctionAllocationExample {
     */
     private import ArchitectureDesign::*;
 
-    #architectureDesignSpace part def DesignSpace {
+    abstract #architectureDesignSpace part def DesignSpace {
         action transportPax[1] :> boundaryFunctions;
 
         abstract #concept allocation byAir[0..1] allocate transportPax to transportPaxByAir;
@@ -144,9 +144,9 @@ package ArchitectureDesign_AdvancedFunctionAllocationExample {
         #concept allocation :>> byLand[0];
 
         action :>> transportPaxByAir[1];
-        action :>> transportPaxByLand[0];
+        action :>> transportPaxByLand[0] = null;
 
-        part :>> landTransportSystem[0];
+        part :>> landTransportSystem[0] = null;
 
         #subsystem part :>> airTransportSystem[1] {
 
@@ -178,7 +178,7 @@ package ArchitectureDesign_AdvancedFunctionAllocationExample {
             }
             
             action :>> improveAerodynamics[1];
-            part :>> winglets[0];
+            part :>> winglets[0] = null;
             #nonFulfillment occurrence :>> noWinglets[1] {
                 :>> nonFulfilledActions[1] = improveAerodynamics;
             }

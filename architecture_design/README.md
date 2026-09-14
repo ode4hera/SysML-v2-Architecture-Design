@@ -24,7 +24,7 @@ An architecture design space might look like this:
 ```sysml
 private import ArchitectureDesign::*;
 
-#architectureDesignSpace part def PropulsionSystemDesignSpace {
+abstract #architectureDesignSpace part def PropulsionSystemDesignSpace {
     
     // System-level objective
     #minObj attribute mass :> ISQ::mass 
@@ -54,6 +54,11 @@ private import ArchitectureDesign::*;
             assert constraint { that <= 1500[SI::'°C_abs'] }
         }
         attribute mass :> ISQ::mass;
+    }
+
+    // Alternative option for fulfilling generateThrust
+    part alternativePropulsor[0..1] {
+        perform generateThrust;
     }
     
     action provideFuel;
@@ -106,6 +111,8 @@ An architecture instance generated from this design space might then look like t
         attribute :>> turbineTemp;
         attribute :>> mass;
     }
+
+    part :>> alternativePropulsor[0] = null; // Element not selected
 
     action :>> provideFuel[1];
 

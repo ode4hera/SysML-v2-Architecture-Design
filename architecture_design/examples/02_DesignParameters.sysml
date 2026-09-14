@@ -99,7 +99,7 @@ package ArchitectureDesign_DesignParametersExample {
     }
 
     package ArchitectureDesignSpace {
-        #architectureDesignSpace part def DesignSpace {
+        abstract #architectureDesignSpace part def DesignSpace {
             doc /* The architecture design space definition with usages of
             part/action defs that can additionally define attributes. */
 

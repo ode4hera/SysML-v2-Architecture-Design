@@ -194,7 +194,7 @@ package ADSG_QuantitiesOfInterest {
             :>> functionLevelExplicitMetric = null; // Evaluation failure (represents NaN)
         }
 
-        part :>> implicitPart[0];
+        part :>> implicitPart[0] = null;
 
         part :>> explicitPart[2] = (explicitPart_1, explicitPart_2) {
             :>> partLevelMaxObjective = 100;
