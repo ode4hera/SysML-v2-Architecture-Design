@@ -4,13 +4,15 @@
     "ArchitectureDesign_FunctionAllocationExample": "examples/01_FunctionAllocation.sysml",
     "ArchitectureDesign_DesignParametersExample": "examples/02_DesignParameters.sysml",
     "ArchitectureDesign_ConnectionChoiceExample": "examples/03_ConnectionChoice.sysml",
-    "ArchitectureDesign_AdvancedFunctionAllocationExample": "examples/04_AdvancedFunctionAllocation.sysml"
+    "ArchitectureDesign_AdvancedFunctionAllocationExample": "examples/04_AdvancedFunctionAllocation.sysml",
+    "ArchitectureDesign_ConnectionModelingExample": "examples/05_ConnectionModeling.sysml",
+    "ArchitectureDesign_ConnectionRulesNativeExample": "examples/06_ConnectionRulesNative.sysml"
   },
   "created": "2025-10-23T05:10:21.958101700Z",
   "metamodel": "https://www.omg.org/spec/SysML/20250201",
   "checksum": {
     "ArchitectureDesign.sysml": {
-      "value": "3d7abfbdb1bc5b5bdda1751261a128001c09ad4c5585db86984ff38812a38f70",
+      "value": "1fe47ccb393eb621c5aa7839e933062c1928fda7ae96b371e1a2b3af69d4c2cd",
       "algorithm": "SHA256"
     },
     "examples/01_FunctionAllocation.sysml": {
@@ -26,6 +28,14 @@
       "algorithm": "NONE"
     },
     "examples/04_AdvancedFunctionAllocation.sysml": {
+      "value": "",
+      "algorithm": "NONE"
+    },
+    "examples/05_ConnectionModeling.sysml": {
+      "value": "",
+      "algorithm": "NONE"
+    },
+    "examples/06_ConnectionRulesNative.sysml": {
       "value": "",
       "algorithm": "NONE"
     }
