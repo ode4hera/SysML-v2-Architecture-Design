@@ -42,6 +42,7 @@ library package ArchitectureDesign {
      * - Modeling the architecture design space
      *   - Function-component allocation (action -> part) and induction (part -> action)
      *   - Port connection choices
+     *   - Connection modeling: native connection rules and architectural patterns
      *   - Design variables, objectives, design constraints
      * - Modeling architecture instances
      *
@@ -51,6 +52,7 @@ library package ArchitectureDesign {
     public import DesignProblemDefs::*;
     public import ArchDesignSpaceDefs::*;
     public import ArchInstanceDefs::*;
+    public import ConnectionModeling::*;
 
     package ArchDesignSpaceDefs {
         doc /* Package containing elements for defining and modeling
@@ -342,6 +344,93 @@ library package ArchitectureDesign {
             ref port sourcePorts[1..*];
             ref port targetPorts[1..*];
             ref associatedConnection[1] : Connections::Connection;
+        }
+
+    }
+
+    package ConnectionModeling {
+        doc /* Package containing elements for connection modeling in an architecture design space,
+        as needed for the automatic generation of architecture instances from connection rules.
+
+        Almost everything about connections is expressed with native SysML v2; this package adds
+        architectural patterns as a direct quantified graph form for rules that would otherwise
+        require restructuring port types and constraints. The native forms, as used by the
+        library examples, are:
+
+        | Connection rule                                    | Native SysML v2 form                                                                    |
+        |----------------------------------------------------|-----------------------------------------------------------------------------------------|
+        | A port must be connected (required connection)     | Lower bound 1 on the port's item: `out item signal[1..*]`                               |
+        | A port may stay unconnected (optional connection)  | Lower bound 0 on the port's item: `out item signal[0..2]`                               |
+        | Maximum number of connections of a port            | Upper bound or allowed list on the port's item: `[0..3]`, `[(0, 2)]`                    |
+        | Repeated connections between the same two ports    | `nonunique` on the item; absent means at most one connection per pair of ports          |
+        | Interchangeable ports of a part                    | One port usage with multiplicity (`port feed[0..3]`), `ordered` when order matters      |
+        | Ports that can never be connected                  | Port types that do not mate (no conjugate); if they otherwise mate, use a restrictive   |
+        |                                                    | architectural pattern containing the forbidden connection                               |
+        | At least one A-B connection in the architecture    | Usage multiplicity on the connection: `connection ab[1..*] connect a to b`              |
+        | Choose k out of heterogeneous candidates           | `variation part choice[1..2] { variant part a; variant part b; ... }`                   |
+        |                                                    | or function fulfillment with #multiFulfillment                                          |
+        | A port whose partner is outside the system         | The partner is a part of the #architectureDesignSpaceContext part, connected there      |
+        | Fixed connection that is not a choice              | A plain connection usage in the design space (not listed in architecturalChoices)       |
+
+        An architectural pattern is a connection motif over labeled instances. A match of the motif
+        is an assignment of distinct design-space part instances to the labels under which every edge
+        of the motif is a connection of the architecture. The pattern's kind says whether a match
+        must exist in every architecture (enforced), must exist whenever every label has an instance
+        (prescriptive), or must never exist (restrictive). Distinct labels are distinct instances,
+        possibly of the same part usage, so a pattern states rules such as "when there are two
+        sensors, at least one computer is fed by both" without naming instances or introducing
+        rule-specific port types. Rules about every instance of a part ("every computer is fed by
+        a sensor") are not patterns: they are stated with port multiplicities (see the table above).
+        Examples 05 and 06 show the same rule with and without a pattern. */
+
+        enum def PatternKind {
+            doc /* How an architectural pattern constrains the generated architecture instances. */
+            enforced {
+                doc /* At least one match of the motif exists in every architecture instance. */
+            }
+            prescriptive {
+                doc /* At least one match of the motif exists in every architecture instance in which
+                every label has at least one instance; architectures missing a participant are not
+                affected. */
+            }
+            restrictive {
+                doc /* No match of the motif exists in any architecture instance. */
+            }
+        }
+
+        abstract occurrence def ArchitecturalPattern {
+            doc /* A connection motif over labeled instances of design space parts.
+            - Labels are referential part usages owned by the pattern that subset a part of the design
+              space, with multiplicity 1: `ref part sensorA subsets sensor[1];`.
+              Two labels are two distinct instances, also when they subset the same part usage.
+            - Edges are plain connection usages between ports of the labels:
+              `connection connect sensorA.measurementOut to computerA.measurementIn;`.
+            - kind says whether a match is enforced, prescriptive or restrictive.
+            The pattern is abstract: it is never instantiated as a component of the architecture. */
+            attribute kind : PatternKind;
+        }
+        metadata def <pattern> architecturalPattern :> Metaobjects::SemanticMetadata {
+            doc /* #pattern declares a connection motif over labeled instances of which a match
+            exists in every architecture (enforced), exists whenever every label has an instance
+            (prescriptive), or never exists (restrictive).
+
+            Should be used as an abstract occurrence inside the architecture design space:
+
+            abstract #pattern occurrence sensorComparison : ArchitecturalPattern {
+                :>> kind = PatternKind::prescriptive;
+                ref part sensorA subsets sensor[1];
+                ref part sensorB subsets sensor[1];
+                ref part computerA subsets computer[1];
+                connection connect sensorA.measurementOut to computerA.measurementIn;
+                connection connect sensorB.measurementOut to computerA.measurementIn;
+            }
+
+            A fixed connection between two single-instance parts does not need a pattern:
+            a plain connection usage in the design space already is one.
+            */
+            :> annotatedElement : SysML::OccurrenceUsage;
+            :> annotatedElement : SysML::OccurrenceDefinition;
+            :>> baseType = ArchitecturalPattern meta SysML::OccurrenceDefinition;
         }
 
     }

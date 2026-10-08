@@ -5,6 +5,7 @@ This library adds concepts for modeling architecture design problems to enable t
 Following concepts are added:
 - Architectural choices: function allocation, element instantiation, port connections
 - Architectural constraints: incompatibility constraints, choice constraints
+- Connection modeling: connection rules in native SysML v2, architectural patterns over labeled instances
 - Design variables: continuous, discrete (integer, ordinal, categorical)
 - Performance metrics: generic outputs, objectives (minimization/maximization), constraint functions
 - Complexity management elements: concepts, decompositions, non/multi-fulfillments, subsystems
@@ -126,6 +127,49 @@ An architecture instance generated from this design space might then look like t
 ```
 
 For more examples, have a look at the models in the `examples` folder.
+
+## Connection Modeling
+
+Connection rules for architecture generation are written in native SysML v2 wherever the language has a direct form for them.
+The `ConnectionModeling` package adds architectural patterns as a concise quantified graph form for rules that would
+otherwise require rule-specific port types and constraints.
+
+| Connection rule | Native SysML v2 form |
+|---|---|
+| A port must be connected | Lower bound 1 on the port's item: `out item signal[1..*]` |
+| A port may stay unconnected | Lower bound 0 on the port's item: `out item signal[0..2]` |
+| Maximum number of connections of a port | Upper bound or allowed list on the item: `[0..3]`, `[(0, 2)]` |
+| Repeated connections between the same two ports | `nonunique` on the item; absent means at most one per pair |
+| Interchangeable ports of a part | One port usage with multiplicity: `port feed[0..3]` |
+| Ports that can never be connected | Port types that do not mate; if they otherwise mate, a restrictive pattern containing the forbidden connection |
+| At least one A-B connection in the architecture | Usage multiplicity on the connection: `connection ab[1..*] connect a to b` |
+| Choose k out of heterogeneous candidates | `variation part choice[1..2] { variant part a; variant part b; ... }` |
+| A port whose partner is outside the system | The partner is a part of the `#architectureDesignSpaceContext` part |
+| Fixed connection that is not a choice | A plain connection usage in the design space |
+
+An architectural pattern is a connection motif over labeled instances. A match of it must exist in every architecture
+(`enforced`), must exist whenever every label has an instance (`prescriptive`), or must never exist (`restrictive`).
+Labels are referential parts owned by the pattern; two labels are two distinct instances, also of the same part usage.
+Rules about every instance of a part ("every computer is fed by a sensor") are not patterns; port multiplicities
+state them.
+
+```sysml
+// When there are two sensors, at least one computer is fed by both
+abstract #pattern occurrence sensorComparison : ArchitecturalPattern {
+    :>> kind = PatternKind::prescriptive;
+
+    ref part sensorA subsets sensor[1];
+    ref part sensorB subsets sensor[1];
+    ref part computerA subsets computer[1];
+
+    connection connect sensorA.measurementOut to computerA.measurementIn;
+    connection connect sensorB.measurementOut to computerA.measurementIn;
+}
+```
+
+See `examples/05_ConnectionModeling.sysml` for the full model, and `examples/06_ConnectionRulesNative.sysml` for the
+same rule written with standard SysML v2 elements only (named roles and an assert constraint), to compare the two
+ways of stating it.
 
 A more complete example, including optimization results, can be found here:
 [https://github.com/jbussemaker/GNC-SysML-v2-Demo](https://github.com/jbussemaker/GNC-SysML-v2-Demo)
