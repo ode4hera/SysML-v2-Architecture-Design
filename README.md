@@ -4,6 +4,7 @@
 
 [![Package Checks](https://github.com/ode4hera/SysML-v2-Architecture-Design/workflows/Package%20Checks/badge.svg)](https://github.com/ode4hera/SysML-v2-Architecture-Design/actions/workflows/package_checks.yml)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Sysand](https://img.shields.io/badge/sysand-Architecture%20Design-blue)](https://sysand.com/projects/ode4hera/architecture-design/)
 
 This repository contains a SysML v2 library package for modeling architectural design spaces (including design parameters and performance metrics) and derived architecture instances.
 Refer to the package [readme](architecture_design/README.md) and [examples](architecture_design/examples/) for more details.
